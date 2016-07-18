@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8">
+<head>
+<title>ajax province by country</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+<script>
+function getcountry(){
+	$.ajax({
+  		url: 'http://greenpeace.or.th/noom/world_province/index.php?m=country',
+//  		dataType: "jsonp",
+  		success: function (data) {
+			$('#country').html('<select name="country" id="countrylist">'+data+'</select>');
+//console.log('<select name="country">'+data+'</select>');
+  			}
+		});
+	}
+
+function getprovince(c_id,target){
+	$.ajax({
+  		url: 'http://greenpeace.or.th/noom/world_province/index.php?m=province&country_code='+c_id,
+//  		dataType: "jsonp",
+  		success: function (pdata) {
+			$('#'+target).empty().append(pdata);
+//console.log('<select name="province">'+pdata+'</select>');
+//console.log('http://127.0.0.1/Tools/countrylist.txt/index.php?m=province&country_code='+c_id);
+  			}
+		});
+	}
+
+
+
+</script>
+
+<script>
+
+$( document ).ready(function() {
+	$('#country').on('change', function() {
+		//alert($('#countrylist').val());
+		getprovince($('#countrylist').val(),'region');
+		});
+    getcountry();
+});
+</script>
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+<form >
+country<br>
+<div id="country"></div>
+province
+<div id="province">
+<select id="region" name="region">
+<option value="a">A</option>
+<option value="b">B</option>
+</select>
+
+</div>
+<input type="submit">
+</form>
+
+
+</body>
+</html>
